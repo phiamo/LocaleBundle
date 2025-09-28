@@ -30,16 +30,16 @@ class LocaleInformation
     private $manager;
 
     /**
-     * @var AllowedLocalesProvider
+     * @var AllowedLocalesProvider|null
      */
     private $allowedLocalesProvider;
 
     /**
-     * @param MetaValidator           $metaValidator           Validator
-     * @param LocaleGuesserManager    $manager                 LocaleGuesserManager
-     * @param AllowedLocalesProvider  $allowedLocalesProvider  Allowed locales
+     * @param MetaValidator                $metaValidator           Validator
+     * @param LocaleGuesserManager         $manager                 LocaleGuesserManager
+     * @param AllowedLocalesProvider|null  $allowedLocalesProvider  Allowed locales
      */
-    public function __construct(MetaValidator $metaValidator, LocaleGuesserManager $manager, AllowedLocalesProvider $allowedLocalesProvider = null)
+    public function __construct(MetaValidator $metaValidator, LocaleGuesserManager $manager, ?AllowedLocalesProvider $allowedLocalesProvider = null)
     {
         $this->metaValidator = $metaValidator;
         $this->manager = $manager;

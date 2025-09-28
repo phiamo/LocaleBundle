@@ -42,17 +42,17 @@ class LocaleGuesserManager
     private $preferredLocales;
 
     /**
-     * @var LoggerInterface
+     * @var LoggerInterface|null
      */
     private $logger;
 
     /**
      * Constructor
      *
-     * @param array           $guessingOrder Config Value for the guessing order
-     * @param LoggerInterface $logger        The Logger
+     * @param array                $guessingOrder Config Value for the guessing order
+     * @param LoggerInterface|null $logger        The Logger
      */
-    public function __construct(array $guessingOrder, LoggerInterface $logger = null)
+    public function __construct(array $guessingOrder, ?LoggerInterface $logger = null)
     {
         $this->guessingOrder = $guessingOrder;
         $this->guessers = array();
