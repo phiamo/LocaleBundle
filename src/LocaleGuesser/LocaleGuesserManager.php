@@ -52,7 +52,7 @@ class LocaleGuesserManager
      * @param array           $guessingOrder Config Value for the guessing order
      * @param LoggerInterface $logger        The Logger
      */
-    public function __construct(array $guessingOrder, LoggerInterface $logger = null)
+    public function __construct(array $guessingOrder, ?LoggerInterface $logger = null)
     {
         $this->guessingOrder = $guessingOrder;
         $this->guessers = array();

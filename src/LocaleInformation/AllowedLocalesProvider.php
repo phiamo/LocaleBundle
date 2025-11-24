@@ -15,7 +15,7 @@ class AllowedLocalesProvider
     /** @var array */
     protected $allowedLocales;
 
-    public function __construct(array $allowedLocales = null)
+    public function __construct(?array $allowedLocales = null)
     {
         $this->allowedLocales = $allowedLocales;
     }
