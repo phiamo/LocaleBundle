@@ -39,7 +39,7 @@ class LocaleInformation
      * @param LocaleGuesserManager    $manager                 LocaleGuesserManager
      * @param AllowedLocalesProvider  $allowedLocalesProvider  Allowed locales
      */
-    public function __construct(MetaValidator $metaValidator, LocaleGuesserManager $manager, AllowedLocalesProvider $allowedLocalesProvider = null)
+    public function __construct(MetaValidator $metaValidator, LocaleGuesserManager $manager, ?AllowedLocalesProvider $allowedLocalesProvider = null)
     {
         $this->metaValidator = $metaValidator;
         $this->manager = $manager;

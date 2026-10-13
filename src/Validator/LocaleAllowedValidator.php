@@ -46,7 +46,7 @@ class LocaleAllowedValidator extends ConstraintValidator
      * @param bool                    $strictMode              Match locales strict (e.g. de_DE will not match allowedLocale de)
      * @param bool                    $intlExtension           Whether the intl extension is installed
      */
-    public function __construct(AllowedLocalesProvider $allowedLocalesProvider = null, $strictMode = false, $intlExtension = false)
+    public function __construct(?AllowedLocalesProvider $allowedLocalesProvider = null, $strictMode = false, $intlExtension = false)
     {
         $this->allowedLocalesProvider = $allowedLocalesProvider;
         $this->strictMode = $strictMode;
