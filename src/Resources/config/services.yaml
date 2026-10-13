@@ -51,7 +51,7 @@ services:
         arguments:
             - '@lunetics_locale.guesser_manager'
             - '%kernel.default_locale%'
-            - '@lunetics_locale.best_locale_matcher?'
+            - '@?lunetics_locale.best_locale_matcher'
             - '@logger'
         calls:
             - setEventDispatcher: ['@event_dispatcher']
@@ -65,7 +65,7 @@ services:
         arguments:
             - '@event_dispatcher'
             - '@lunetics_locale.locale_cookie'
-            - '@lunetics_locale.locale_session?'
+            - '@?lunetics_locale.locale_session'
             - '%lunetics_locale.guessing_order%'
             - '@logger'
         tags:
