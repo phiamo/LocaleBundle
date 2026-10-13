@@ -1,0 +1,29 @@
+parameters:
+    validator.lunetics_locale.locale.class: Lunetics\LocaleBundle\Validator\LocaleValidator
+    validator.lunetics_locale.locale_allowed.class: Lunetics\LocaleBundle\Validator\LocaleAllowedValidator
+    lunetics_locale.validator.meta.class: Lunetics\LocaleBundle\Validator\MetaValidator
+
+services:
+    validator.lunetics_locale.locale:
+        class: '%validator.lunetics_locale.locale.class%'
+        arguments:
+            - '%lunetics_locale.intl_extension_installed%'
+            - '%lunetics_locale.intl_extension_fallback.iso3166%'
+            - '%lunetics_locale.intl_extension_fallback.iso639%'
+            - '%lunetics_locale.intl_extension_fallback.script%'
+        tags:
+            - { name: validator.constraint_validator, alias: lunetics_locale.validator.locale }
+
+    validator.lunetics_locale.locale_allowed:
+        class: '%validator.lunetics_locale.locale_allowed.class%'
+        arguments:
+            - '@lunetics_locale.allowed_locales_provider'
+            - '%lunetics_locale.strict_mode%'
+            - '%lunetics_locale.intl_extension_installed%'
+        tags:
+            - { name: validator.constraint_validator, alias: lunetics_locale.validator.locale_allowed }
+
+    lunetics_locale.validator.meta:
+        class: '%lunetics_locale.validator.meta.class%'
+        arguments:
+            - '@validator'

@@ -1,0 +1,87 @@
+parameters:
+    lunetics_locale.request_listener.class: Lunetics\LocaleBundle\EventListener\LocaleListener
+    lunetics_locale.guesser_manager.class: Lunetics\LocaleBundle\LocaleGuesser\LocaleGuesserManager
+    lunetics_locale.information.class: Lunetics\LocaleBundle\LocaleInformation\LocaleInformation
+    lunetics_locale.locale_session.class: Lunetics\LocaleBundle\Session\LocaleSession
+    lunetics_locale.locale_update_listener.class: Lunetics\LocaleBundle\EventListener\LocaleUpdateListener
+    lunetics_locale.incoming_locale_listener.class: Lunetics\LocaleBundle\EventListener\IncomingLocaleListener
+    lunetics_locale.best_locale_matcher.class: Lunetics\LocaleBundle\Matcher\DefaultBestLocaleMatcher
+    lunetics_locale.allowed_locales_provider.class: Lunetics\LocaleBundle\LocaleInformation\AllowedLocalesProvider
+    lunetics_locale.topleveldomain_locale_map.class: Lunetics\LocaleBundle\LocaleInformation\TopleveldomainLocaleMap
+    lunetics_locale.domain_locale_map.class: Lunetics\LocaleBundle\LocaleInformation\DomainLocaleMap
+
+services:
+    lunetics_locale.guesser_manager:
+        class: '%lunetics_locale.guesser_manager.class%'
+        arguments:
+            - '%lunetics_locale.guessing_order%'
+            - '@logger'
+
+    lunetics_locale.information:
+        class: '%lunetics_locale.information.class%'
+        arguments:
+            - '@lunetics_locale.validator.meta'
+            - '@lunetics_locale.guesser_manager'
+            - '@lunetics_locale.allowed_locales_provider'
+
+    lunetics_locale.locale_cookie:
+        class: '%lunetics_locale.cookie.class%'
+        arguments:
+            - '%lunetics_locale.cookie.name%'
+            - '%lunetics_locale.cookie.ttl%'
+            - '%lunetics_locale.cookie.path%'
+            - '%lunetics_locale.cookie.domain%'
+            - '%lunetics_locale.cookie.secure%'
+            - '%lunetics_locale.cookie.httpOnly%'
+            - '%lunetics_locale.cookie.set_on_change%'
+
+    lunetics_locale.locale_session:
+        class: '%lunetics_locale.locale_session.class%'
+        arguments:
+            - '@session'
+            - '%lunetics_locale.session.variable%'
+
+    lunetics_locale.best_locale_matcher:
+        class: '%lunetics_locale.best_locale_matcher.class%'
+        arguments:
+            - '@lunetics_locale.allowed_locales_provider'
+
+    lunetics_locale.locale_listener:
+        class: '%lunetics_locale.request_listener.class%'
+        arguments:
+            - '@lunetics_locale.guesser_manager'
+            - '%kernel.default_locale%'
+            - '@lunetics_locale.best_locale_matcher?'
+            - '@logger'
+        calls:
+            - setEventDispatcher: ['@event_dispatcher']
+            - setDisableVaryHeader: ['%lunetics_locale.disable_vary_header%']
+            - setExcludedPattern: ['%lunetics_locale.guessing_excluded_pattern%']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    lunetics_locale.locale_update_listener:
+        class: '%lunetics_locale.locale_update_listener.class%'
+        arguments:
+            - '@event_dispatcher'
+            - '@lunetics_locale.locale_cookie'
+            - '@lunetics_locale.locale_session?'
+            - '%lunetics_locale.guessing_order%'
+            - '@logger'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    lunetics_locale.allowed_locales_provider:
+        class: '%lunetics_locale.allowed_locales_provider.class%'
+        calls:
+            - setAllowedLocales: ['%lunetics_locale.allowed_locales%']
+
+    lunetics_locale.topleveldomain_locale_map:
+        class: '%lunetics_locale.topleveldomain_locale_map.class%'
+        arguments:
+            - '%lunetics_locale.topleveldomain.locale_map%'
+
+    lunetics_locale.domain_locale_map:
+        class: '%lunetics_locale.domain_locale_map.class%'
+        arguments:
+            - '%lunetics_locale.domain.locale_map%'

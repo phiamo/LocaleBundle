@@ -1,0 +1,18 @@
+parameters:
+    lunetics_locale.form.locale.choicelist.class: Lunetics\LocaleBundle\Form\Extension\ChoiceList\LocaleChoiceList
+    form.type.lunetics_locale.class: Lunetics\LocaleBundle\Form\Extension\Type\LocaleType
+
+services:
+    lunetics_locale.form.locale.choicelist:
+        class: '%lunetics_locale.form.locale.choicelist.class%'
+        arguments:
+            - '@lunetics_locale.information'
+            - '%lunetics_locale.form.languages_only%'
+            - '%lunetics_locale.form.strict_mode%'
+
+    form.type.lunetics_locale:
+        class: '%form.type.lunetics_locale.class%'
+        arguments:
+            - '@lunetics_locale.form.locale.choicelist'
+        tags:
+            - { name: form.type, alias: lunetics_locale }

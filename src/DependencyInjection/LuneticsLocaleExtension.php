@@ -54,12 +54,12 @@ class LuneticsLocaleExtension extends Extension
         $container->setParameter('lunetics_locale.intl_extension_fallback.script', $localeScript);
 
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('validator.xml');
-        $loader->load('guessers.xml');
-        $loader->load('services.xml');
-        $loader->load('switcher.xml');
-        $loader->load('form.xml');
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('validator.yaml');
+        $loader->load('guessers.yaml');
+        $loader->load('services.yaml');
+        $loader->load('switcher.yaml');
+        $loader->load('form.yaml');
 
         if (!$config['strict_match']) {
             $container->removeDefinition('lunetics_locale.best_locale_matcher');
